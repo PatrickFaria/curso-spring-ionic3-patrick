@@ -1,0 +1,8 @@
+{
+  "name": "CursoSpringIonic3Patrick",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
