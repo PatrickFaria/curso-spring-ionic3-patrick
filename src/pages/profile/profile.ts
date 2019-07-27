@@ -28,7 +28,13 @@ export class ProfilePage {
         console.log(this.getEmageIfExist())
         this.getEmageIfExist()
       },
-      erro => {});
+      error => {
+        if(error.status){
+          this.navCtrl.setRoot('HomePage')
+        }
+      });
+    }else{
+      this.navCtrl.setRoot('HomePage')
     }
   }
 
