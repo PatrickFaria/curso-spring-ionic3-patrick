@@ -24,7 +24,7 @@ export class ProfilePage {
     let localuser = this.storage.getLocalUser()
     if(localuser && localuser.email){
       this.clienteService.findByEmail(localuser.email).subscribe(response => {
-        this.cliente = response
+        this.cliente = response as ClienteDTO
         console.log(this.getEmageIfExist())
         this.getEmageIfExist()
       },
