@@ -4,11 +4,13 @@ import { Observable } from "rxjs/Rx";
 import { ClienteDTO } from "../../models/cliente.dto";
 import { API_CONFIG } from "../../config/api.config";
 import { StorageService } from "../storage.service";
+import { ImageUtilService } from "../image-util.service";
 
 @Injectable()
 export class ClienteService{
 
-    constructor(public storage: StorageService, public http: HttpClient){}
+    constructor(public storage: StorageService, public http: HttpClient,
+        public imageUtilService: ImageUtilService){}
 
     findByEmail( email: string){
         return this.http.get(`${API_CONFIG.baseUrl}/clientes/email?value=${email}`)
@@ -26,6 +28,19 @@ export class ClienteService{
         return this.http.post(
             `${API_CONFIG.baseUrl}/clientes`,
             obj,{
+                observe: 'response',
+                responseType: 'text'
+            }
+        )
+    }
+
+    uploadPicture(picture){
+        let pictureBlob = this.imageUtilService.dataUriToBlob(picture)
+        let formData: FormData = new FormData()
+        formData.set('file', pictureBlob, 'file.png')
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/clientes/picture`,
+            formData,{
                 observe: 'response',
                 responseType: 'text'
             }

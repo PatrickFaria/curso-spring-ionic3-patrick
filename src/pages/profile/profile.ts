@@ -26,6 +26,10 @@ export class ProfilePage {
   }
 
   ionViewDidLoad() {
+    this.loadData()
+  }
+
+  loadData(){
     let localuser = this.storage.getLocalUser()
     if(localuser && localuser.email){
       this.clienteService.findByEmail(localuser.email).subscribe(response => {
@@ -65,5 +69,18 @@ export class ProfilePage {
      this.cameraOn = false
     }, (err) => {
     });
+  }
+
+  sendPicture(){
+    this.clienteService.uploadPicture(this.picture).subscribe(response=> {
+      this.picture = null
+      this.loadData()
+    },
+    error => {
+
+    })
+  }
+  cancel(){
+    this.picture=null
   }
 }
